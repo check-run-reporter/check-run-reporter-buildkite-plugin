@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Dredd Tests" tests="1" failures="0" errors="0" skip="0" timestamp="Fri, 03 May 2019 03:11:34 GMT" time="5.689">
+  <testcase name="GET (200) /ping" time="0.019"/>
+</testsuite>

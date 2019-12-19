@@ -1,0 +1,11 @@
+version: '2'
+services:
+  linter:
+    image: buildkite/plugin-linter
+    command: ['--id', 'check-run-reporter/check-run-reporter']
+    volumes:
+      - ".:/plugin:ro"
+  tests:
+    build: .
+    volumes:
+      - ".:/plugin:ro"

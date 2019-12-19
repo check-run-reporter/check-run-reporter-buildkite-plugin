@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+shopt -s globstar nullglob
+
+LABEL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_LABEL:-$BUILDKITE_LABEL}
+ROOT=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_ROOT:-$(pwd)}
+SHA=$BUILDKITE_COMMIT
+TOKEN=$BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TOKEN
+
+CMD='curl -v https://www.check-run-reporter.com/api/v1/submissions'
+CMD="$CMD --user token:'$TOKEN'"
+CMD="$CMD -F label'=$LABEL'"
+CMD="$CMD -F root='$ROOT'"
+CMD="$CMD -F sha='$SHA'"
+
+for FILE in $BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_FILE; do
+  echo "Preparing to upload '$FILE' to Check Run Reporter"
+  CMD="$CMD -F 'report=@$(pwd)/$FILE'"
+done
+
+echo "Uploading reports to Check Run Reporter"
+OUT=$(eval "$CMD")
+
+if [[ $OUT =~ code ]]; then
+  echo 'Failed to upload to Check Run Reporter'
+  echo "$OUT"
+  exit 1
+fi
+
+echo "Uploaded reports to Check Run Reporter"

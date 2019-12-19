@@ -1,0 +1,20 @@
+name: Check Run Reporter
+description: Uploads test reports to check-run-reporter.com
+author: https://github.com/check-run-reporter
+requirements:
+  - curl
+  - jq
+configuration:
+  properties:
+    report:
+      type: string
+    label:
+      type: string
+    root:
+      type: string
+    token:
+      type: string
+  additionalProperties: false
+  required:
+    - report
+    - token
