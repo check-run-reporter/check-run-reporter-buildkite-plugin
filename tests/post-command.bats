@@ -9,7 +9,7 @@ load '/usr/local/lib/bats/load.bash'
 
     export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_LABEL='BATS: Single Report Upload'
     export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TOKEN=42bbb14a-ef66-4e88-8bdb-1507d6e7adc0
-    export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_FILE=tests/success.xml
+    export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_REPORT=tests/success.xml
 
     run "$PWD/hooks/post-command"
 
@@ -24,7 +24,7 @@ load '/usr/local/lib/bats/load.bash'
 
     export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_LABEL='BATS: Multi Report Upload'
     export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TOKEN=42bbb14a-ef66-4e88-8bdb-1507d6e7adc0
-    export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_FILE=tests/**/*.xml
+    export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_REPORT=tests/**/*.xml
 
     run "$PWD/hooks/post-command"
 
@@ -39,7 +39,7 @@ load '/usr/local/lib/bats/load.bash'
 
     export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_LABEL='BATS: Single Report Upload'
     export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TOKEN='not-a-token'
-    export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_FILE=tests/success.xml
+    export BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_REPORT=tests/success.xml
 
     run "$PWD/hooks/post-command"
 

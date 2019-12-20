@@ -14,7 +14,7 @@ CMD="$CMD -F label'=$LABEL'"
 CMD="$CMD -F root='$ROOT'"
 CMD="$CMD -F sha='$SHA'"
 
-for FILE in $BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_FILE; do
+for FILE in $BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_REPORT; do
   echo "Preparing to upload '$FILE' to Check Run Reporter"
   CMD="$CMD -F 'report=@$(pwd)/$FILE'"
 done
