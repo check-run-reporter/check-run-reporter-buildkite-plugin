@@ -7,8 +7,9 @@ LABEL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_LABEL:-$BUILDKITE_LABEL}
 ROOT=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_ROOT:-$(pwd)}
 SHA=$BUILDKITE_COMMIT
 TOKEN=$BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TOKEN
+URL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_URL:-https://www.check-run-reporter.com/api/v1/submissions}
 
-CMD='curl -v https://www.check-run-reporter.com/api/v1/submissions'
+CMD="curl -v $URL"
 CMD="$CMD --user token:'$TOKEN'"
 CMD="$CMD -F label'=$LABEL'"
 CMD="$CMD -F root='$ROOT'"

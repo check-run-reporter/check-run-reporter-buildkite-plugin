@@ -14,6 +14,8 @@ configuration:
       type: string
     token:
       type: string
+    url:
+      type: string
   additionalProperties: false
   required:
     - report
