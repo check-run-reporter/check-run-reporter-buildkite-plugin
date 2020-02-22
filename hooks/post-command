@@ -8,7 +8,7 @@ find_root () {
     log 'It looks like this step was run via Docker Compose.'
     ROOT=''
     if [ -f Dockerfile ]; then
-      log 'Attempting to parsed Dockerfile'
+      log 'Attempting to parse Dockerfile'
       ROOT="$(awk '/WORKDIR/ {print $2}' Dockerfile | tail -n 1)"
     else
       log 'No Dockerfile found.'
@@ -17,6 +17,8 @@ find_root () {
     if [ "$ROOT" == '' ]; then
       log 'Could not determine root from Dockerfile. Assuming "/" for root.'
       echo '/'
+    else
+      echo "$ROOT"
     fi
   elif echo "$BUILDKITE_PLUGINS" | grep -q docker-buildkite-plugin; then
     log 'It looks like this step was run via Docker.'
