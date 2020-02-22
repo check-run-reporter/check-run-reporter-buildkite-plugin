@@ -3,11 +3,51 @@
 set -euo pipefail
 shopt -s globstar nullglob
 
+find_root () {
+  if echo "$BUILDKITE_PLUGINS" | grep -q docker-compose-buildkite-plugin; then
+    log 'It looks like this step was run via Docker Compose.'
+    ROOT=''
+    if [ -f Dockerfile ]; then
+      log 'Attempting to parsed Dockerfile'
+      ROOT="$(awk '/WORKDIR/ {print $2}' Dockerfile | tail -n 1)"
+    else
+      log 'No Dockerfile found.'
+    fi
+
+    if [ "$ROOT" == '' ]; then
+      log 'Could not determine root from Dockerfile. Assuming "/" for root.'
+      echo '/'
+    fi
+  elif echo "$BUILDKITE_PLUGINS" | grep -q docker-buildkite-plugin; then
+    log 'It looks like this step was run via Docker.'
+
+    if [ "${BUILDKITE_PLUGIN_DOCKER_WORKDIR:-}" != '' ]; then
+      log 'Using the configured docker plugin workdir'
+      echo "$BUILDKITE_PLUGIN_DOCKER_WORKDIR"
+    else
+      log 'Using the default docker plugin workdir'
+      echo '/workdir'
+    fi
+  else
+    log 'It looks like this step was run right on the agent. Using PWD for root'
+    pwd
+  fi
+}
+
+log () {
+  echo "$@" 1>&2
+}
+
 LABEL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_LABEL:-$BUILDKITE_LABEL}
-ROOT=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_ROOT:-$(pwd)}
+ROOT=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_ROOT:-$(find_root)}
 SHA=$BUILDKITE_COMMIT
 TOKEN=$BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TOKEN
 URL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_URL:-https://www.check-run-reporter.com/api/v1/submissions}
+
+log 'Running check-run-reporter-buildkite-plugin with the following parameters'
+log "LABEL=$LABEL"
+log "ROOT=$ROOT"
+log "SHA=$SHA"
 
 CMD="curl -v $URL"
 CMD="$CMD --user token:'$TOKEN'"
