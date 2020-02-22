@@ -9,6 +9,10 @@ SHA=$BUILDKITE_COMMIT
 TOKEN=$BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TOKEN
 URL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_URL:-https://www.check-run-reporter.com/api/v1/submissions}
 
+echo "LABEL=$LABEL"
+echo "ROOT=$ROOT"
+echo "SHA=$SHA"
+
 CMD="curl -v $URL"
 CMD="$CMD --user token:'$TOKEN'"
 CMD="$CMD -F label'=$LABEL'"
