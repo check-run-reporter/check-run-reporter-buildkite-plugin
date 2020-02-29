@@ -45,6 +45,7 @@ ROOT=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_ROOT:-$(find_root)}
 SHA=$BUILDKITE_COMMIT
 TOKEN=$BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TOKEN
 URL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_URL:-https://api.check-run-reporter.com/api/v1/submissions}
+REPORT_DIR=$BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_REPORT
 
 log 'Running check-run-reporter-buildkite-plugin with the following parameters'
 log "LABEL=$LABEL"
@@ -57,7 +58,7 @@ CMD="$CMD -F label'=$LABEL'"
 CMD="$CMD -F root='$ROOT'"
 CMD="$CMD -F sha='$SHA'"
 
-for FILE in $BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_REPORT; do
+for FILE in $REPORT_DIR; do
   echo "Preparing to upload '$FILE' to Check Run Reporter"
   CMD="$CMD -F 'report=@$(pwd)/$FILE'"
 done
