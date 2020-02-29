@@ -44,7 +44,7 @@ LABEL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_LABEL:-$BUILDKITE_LABEL}
 ROOT=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_ROOT:-$(find_root)}
 SHA=$BUILDKITE_COMMIT
 TOKEN=$BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TOKEN
-URL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_URL:-https://www.check-run-reporter.com/api/v1/submissions}
+URL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_URL:-https://api.check-run-reporter.com/api/v1/submissions}
 
 log 'Running check-run-reporter-buildkite-plugin with the following parameters'
 log "LABEL=$LABEL"
