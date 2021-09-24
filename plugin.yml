@@ -1,9 +1,7 @@
 name: Check Run Reporter
 description: Uploads test reports to check-run-reporter.com
 author: https://github.com/check-run-reporter
-requirements:
-  - curl
-  - jq
+requirements: []
 configuration:
   properties:
     report:
