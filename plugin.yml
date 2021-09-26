@@ -1,5 +1,5 @@
 name: Check Run Reporter
-description: Uploads test reports to check-run-reporter.com
+description: Stop digging through logs and view test results without leaving GitHub.
 author: https://github.com/check-run-reporter
 requirements: []
 configuration:
