@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# This is a tiny wrapper around pre-command which logs the resultant environment
+# so that the test can assert against it.
+
+set -euo pipefail
+
+source pre-command
+env | awk '
+  /CHECK_RUN_REPORTER_TESTS_FOR_THIS_AGENT/ { found = 1 }
+  found { print $0}
+'

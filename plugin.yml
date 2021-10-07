@@ -6,6 +6,8 @@ configuration:
   properties:
     report:
       type: string
+    tests:
+      type: string
     label:
       type: string
     root:

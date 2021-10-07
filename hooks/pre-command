@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+shopt -s globstar nullglob
+
+HOOKS_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+PATH="$PATH:$HOOKS_DIR/../bin"
+
+log () {
+  echo "$@" 1>&2
+}
+
+LABEL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_LABEL:-$BUILDKITE_LABEL}
+TOKEN=$BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TOKEN
+TESTS=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TESTS:-''}
+URL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_URL:-https://api.check-run-reporter.com/api/v1/submissions}
+
+if [ -z "$TESTS" ]; then
+  exit 0
+fi
+
+NODE_COUNT=${BUILDKITE_PARALLEL_JOB_COUNT:-0}
+NODE_INDEX=${BUILDKITE_PARALLEL_JOB:-0}
+
+log 'Running check-run-reporter-buildkite-plugin split with the following parameters'
+log "LABEL=$LABEL"
+log "TESTS=$TESTS"
+log "NODE_COUNT=$NODE_COUNT"
+log "NODE_INDEX=$NODE_INDEX"
+
+echo "Getting distributed tests for this node from Check Run Reporter"
+
+BIN=
+if [ "$(uname)" == "Darwin" ]; then
+  BIN=crr-macos
+else
+  BIN=crr-linux
+fi
+
+export CHECK_RUN_REPORTER_TESTS_FOR_THIS_AGENT
+CHECK_RUN_REPORTER_TESTS_FOR_THIS_AGENT=$($BIN split \
+  --label="$LABEL" \
+  --nodeCount="$NODE_COUNT" \
+  --nodeIndex="$NODE_INDEX" \
+  --tests="$TESTS" \
+  --token="$TOKEN" \
+  --url="$URL")
+
+echo "Got distributed tests for this node from Check Run Reporter"
