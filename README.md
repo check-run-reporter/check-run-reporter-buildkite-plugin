@@ -18,7 +18,7 @@ them back to GitHub as Check Runs.
 steps:
     - command: npm test
       plugins:
-          - check-run-reporter/check-run-reporter#v2.7.0:
+          - check-run-reporter/check-run-reporter#v2.7.1:
                 report: 'reports/junit/**/*.xml'
                 token: '<your repo token>'
 ```
@@ -35,9 +35,9 @@ should run on this host.
 
 ```yml
 steps:
-    - command: npm test -- $($CHECK_RUN_REPORTER_TESTS_FOR_THIS_AGENT)
+    - command: npm test -- $$CHECK_RUN_REPORTER_TESTS_FOR_THIS_AGENT
       plugins:
-          - check-run-reporter/check-run-reporter#v2.7.0:
+          - check-run-reporter/check-run-reporter#v2.7.1:
                 tests: 'src/**/*.spec.ts,!src/storyshots.spec.ts'
                 report: 'reports/junit/**/*.xml'
                 token: '<your repo token>'
