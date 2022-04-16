@@ -43,6 +43,7 @@ log () {
   echo "$@" 1>&2
 }
 
+HOSTNAME=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_HOSTNAME:-api.check-run-reporter.com}
 LABEL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_LABEL:-$BUILDKITE_LABEL}
 ROOT=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_ROOT:-$(find_root)}
 SHA=$BUILDKITE_COMMIT
@@ -65,6 +66,7 @@ else
 fi
 
 $BIN submit \
+  --hostname="$HOSTNAME" \
   --label="$LABEL" \
   --report="$REPORT_DIR" \
   --root="$ROOT" \
