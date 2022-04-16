@@ -4,6 +4,8 @@ author: https://github.com/check-run-reporter
 requirements: []
 configuration:
   properties:
+    hostname:
+      type: string
     report:
       type: string
     tests:
