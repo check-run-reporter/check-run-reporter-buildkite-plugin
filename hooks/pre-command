@@ -10,11 +10,10 @@ log () {
   echo "$@" 1>&2
 }
 
-HOSTNAME=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_HOSTNAME:-api.check-run-reporter.com}
+HOSTNAME=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_HOSTNAME:-''}
 LABEL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_LABEL:-$BUILDKITE_LABEL}
 TOKEN=$BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TOKEN
 TESTS=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_TESTS:-''}
-URL=${BUILDKITE_PLUGIN_CHECK_RUN_REPORTER_URL:-https://api.check-run-reporter.com/api/v1/split}
 
 if [ -z "$TESTS" ]; then
   exit 0
@@ -45,7 +44,6 @@ CHECK_RUN_REPORTER_TESTS_FOR_THIS_AGENT=$($BIN split \
   --nodeCount="$NODE_COUNT" \
   --nodeIndex="$NODE_INDEX" \
   --tests="$TESTS" \
-  --token="$TOKEN" \
-  --url="$URL")
+  --token="$TOKEN")
 
 echo "Got distributed tests for this node from Check Run Reporter"
