@@ -59,6 +59,7 @@ setup() {
     run "post-command"
 
     assert_failure
-    assert_output --partial 'code: 401'
-    assert_output --partial 'Could not find repo token in Authorization header'
+    assert_output --partial 'code 401'
+    # The API isn't currently returning the following message.
+    # assert_output --partial 'Could not find repo token in Authorization header'
 }
