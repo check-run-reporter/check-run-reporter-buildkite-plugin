@@ -29,8 +29,8 @@ setup() {
 
     assert_success
 
-    assert_line --index 0 CHECK_RUN_REPORTER_TESTS_FOR_THIS_AGENT=logger.spec.ts
-    assert_line --index 1 'user.spec.ts'
+    assert_output 'CHECK_RUN_REPORTER_TESTS_FOR_THIS_AGENT=logger.spec.ts
+user.spec.ts'
 }
 
 @test "Without tests input" {

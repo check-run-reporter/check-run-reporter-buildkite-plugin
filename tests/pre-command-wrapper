@@ -5,8 +5,11 @@
 
 set -euo pipefail
 
-source pre-command
-env | awk '
-  /CHECK_RUN_REPORTER_TESTS_FOR_THIS_AGENT/ { found = 1 }
-  found { print $0}
-'
+# Reminder, this has to be sourced so that it can change the environment of the
+# current process so that the next line can work
+source pre-command &>/dev/null
+
+# I don't really know what this command does, but I couldn't quite get awk to do
+# what I wanted and after a few rounds with ChatGPT that did nothing, this
+# appears to work.
+env | sed -n '/^CHECK_RUN_REPORTER_TESTS_FOR_THIS_AGENT=/,/^.*$/p'
